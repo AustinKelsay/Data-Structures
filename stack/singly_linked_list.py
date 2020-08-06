@@ -20,25 +20,21 @@ class LinkedList:
         # the last Node in the LinkedList
         self.tail = None
 
-    def contains(self, data):
-        # an empty linked list can't contain what we're looking for
-        if not self.head:
+    def contains(self, value):
+        if self.head is None:
             return False
-        # get a reference to the first Node in the linked list
-        # we update what this Node points to as we traverse the linked list
-        current = self.head
-        # traverse the linked list so long as `current` is referring
-        # to a Node
-        while current is not None:
-            # check if the Node that `current` is pointing at is holding
-            # the data we're looking for
-            if current.get_value() == data:
-                return True
-            # update our `current` pointer to point to the next Node in the linked list
-            current = current.get_next()
 
-            # we checked the whole linked list and didn't find the data
-            return False
+        # Loop through each node, until we see the value, or we cannot go further
+        current_node = self.head
+
+        while current_node is not None:
+            # check if this is the node we are looking for
+            if current_node.value == value:
+                return True
+
+            # otherwise, go to the next node
+            current_node = current_node.next
+        return False
 
     def get_max(self):
         if self.head is None:
@@ -51,6 +47,19 @@ class LinkedList:
 
         current = current.get_next()
         return max_so_far
+
+    def add_to_head(self, value):
+        # create a node to add
+        new_node = Node(value)
+        # check if the list is empty
+        if self.head is None and self.tail is None:
+            self.head = new_node
+            self.tail = new_node
+        else:
+            # new node should point to the current head
+            new_node.next = self.head
+            # move head to new node
+            self.head = new_node
 
     def add_to_tail(self, value):
         new_node = Node(value)
